@@ -9,8 +9,7 @@ class User(AbstractUser):
 
     avatar = models.ImageField(null=True, default="avatar.svg")
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
+    REQUIRED_FIELDS = ['email', 'first_name', 'last_name']
     
   
      # Custom related names for permissions and groups
@@ -30,7 +29,7 @@ class User(AbstractUser):
     )
 
     def __str__(self):
-        return self.email
+        return self.username
 
     class Meta:
         verbose_name =('user')

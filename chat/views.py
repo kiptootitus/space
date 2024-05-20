@@ -7,7 +7,12 @@ from django.contrib.auth import authenticate, login, logout
 from .models import Room, Topic, Message, User
 from .forms import RoomForm, UserForm, MyUserCreationForm
 
-
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from .models import Room, Topic, Message, User
+from .forms import RoomForm, UserForm, MyUserCreationForm
 
 
 def loginPage(request):
@@ -16,21 +21,16 @@ def loginPage(request):
         return redirect('home')
 
     if request.method == 'POST':
-        email = request.POST.get('email').lower()
+        username = request.POST.get('username')
         password = request.POST.get('password')
 
-        try:
-            user = User.objects.get(email=email)
-        except:
-            messages.error(request, 'User does not exist')
-
-        user = authenticate(request, email=email, password=password)
+        user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)
             return redirect('home')
         else:
-            messages.error(request, 'Username OR password does not exit')
+            messages.error(request, 'Username or password is incorrect')
 
     context = {'page': page}
     return render(request, 'chat/login_register.html', context)
@@ -84,7 +84,7 @@ def room(request, pk):
 
     if request.method == 'POST':
         message = Message.objects.create(
-            user=request.user,
+            user = request.user,
             room=room,
             body=request.POST.get('body')
         )
