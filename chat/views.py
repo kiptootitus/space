@@ -1,18 +1,12 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.contrib.auth import authenticate, login, logout
-from .models import Room, Topic, Message, User
-from .forms import RoomForm, UserForm, MyUserCreationForm
-
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from .models import Room, Topic, Message, User
+
 from .forms import RoomForm, UserForm, MyUserCreationForm
+from .models import Room, Topic, Message, User
 
 
 def loginPage(request):
@@ -77,6 +71,7 @@ def home(request):
     return render(request, 'chat/home.html', context)
 
 
+
 def room(request, pk):
     room = Room.objects.get(id=pk)
     room_messages = room.message_set.all()
@@ -84,7 +79,7 @@ def room(request, pk):
 
     if request.method == 'POST':
         message = Message.objects.create(
-            user = request.user,
+            user=request.user,
             room=room,
             body=request.POST.get('body')
         )
@@ -94,7 +89,6 @@ def room(request, pk):
     context = {'room': room, 'room_messages': room_messages,
                'participants': participants}
     return render(request, 'chat/room.html', context)
-
 
 def userProfile(request, pk):
     user = User.objects.get(id=pk)
