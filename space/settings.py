@@ -2,11 +2,10 @@ import os
 
 from pathlib import Path
 
-
-here = lambda * x: os.path.join(os.path.abspath(os.path.dirname(__file__)), *x)
+here = lambda *x: os.path.join(os.path.abspath(os.path.dirname(__file__)), *x)
 
 PROJECT_ROOT = here("..")
-root = lambda * x: os.path.join(os.path.abspath(PROJECT_ROOT), *x)
+root = lambda *x: os.path.join(os.path.abspath(PROJECT_ROOT), *x)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 AUTH_USER_MODEL = 'chat.User'
@@ -18,7 +17,6 @@ SECRET_KEY = 'django-insecure-4r&rlkv&rwc3g51xjxy4vr_j&5n23#igz-uiq^t4fm(^@t87x)
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -65,7 +63,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'space.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -75,7 +72,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -98,7 +94,6 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -109,8 +104,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
-
 
 ASGI_APPLICATION = 'space.asgi.application'
 
@@ -124,7 +117,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
