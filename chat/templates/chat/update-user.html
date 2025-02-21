@@ -1,23 +1,49 @@
-<div class="topics">
-    <div class="topics__header">
-        <h2>Browse Topics</h2>
-    </div>
-    <ul class="topics__list">
-        <li>
-            <a class="active" href="{% url 'home' %}">All <span>{{topics.count}}</span></a>
-        </li>
-        {% for topic in topics %}
-        <li>
-            <a href="{% url 'home' %}?q={{topic.name}}">{{topic.name}}<span>{{topic.room_set.all.count}}</span></a>
-        </li>
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-3">Update Profile</h2>
+
+    <form method="POST" enctype="multipart/form-data" id="updateUserForm">
+        {% csrf_token %}
+        
+        <!-- Profile Picture Preview -->
+        <div class="text-center mb-3">
+            <img id="profilePreview" 
+                 src="{{ user.profile.image.url }}" 
+                 alt="Profile Image" 
+                 class="rounded-circle" 
+                 width="150">
+        </div>
+
+        <!-- Profile Picture Upload -->
+        <div class="form-group">
+            <label for="id_profile_image">Profile Picture</label>
+            <input type="file" class="form-control-file" id="id_profile_image" name="profile_image">
+        </div>
+
+        <!-- Form Fields -->
+        {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+        </div>
         {% endfor %}
 
-    </ul>
-    <a class="btn btn--link" href="{% url 'topics' %}">
-        More
-        <svg height="32" version="1.1" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg">
-            <title>chevron-down</title>
-            <path d="M16 21l-13-13h-3l16 16 16-16h-3l-13 13z"></path>
-        </svg>
-    </a>
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Update Profile</button>
+    </form>
 </div>
+
+<!-- Image Preview Script -->
+<script>
+document.getElementById("id_profile_image").addEventListener("change", function(event) {
+    let reader = new FileReader();
+    reader.onload = function() {
+        document.getElementById("profilePreview").src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+});
+</script>
+
+{% endblock %}
